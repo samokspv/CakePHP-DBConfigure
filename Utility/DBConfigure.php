@@ -35,7 +35,24 @@ class DBConfigure {
 		if (!self::$_Engine) {
 			self::$_Engine = ClassRegistry::init('DBConfigure.' . self::$_EngineName);
 		}
+
 		return self::$_Engine;
+	}
+
+
+	/**
+	 * Get config data from storage/config file
+	 *
+	 * @param string $key Variable key
+	 * @return mixed
+	 */
+	protected static function _getConfigByKey($key) {
+		$config = self::_getEngine()->get($key);
+		if (empty($config)) {
+			$config = Configure::read($key);
+		}
+
+		return $config;
 	}
 
 	/**
@@ -46,15 +63,22 @@ class DBConfigure {
 	 * @return boolean
 	 */
 	public static function write($key, $value) {
-		if (!empty($key) && !empty($value)) {
-			self::_getEngine()->add($key, $value);
-			return true;
+		if (empty($key) || empty($value)) {
+			return false;
 		}
-		return false;
+
+		$key = explode('.', $key);
+		$config = self::_getConfigByKey($key[0]);
+		if (!empty($config) && count($key) > 1) {
+			$value = Hash::insert($config, implode('.', array_slice($key, 1)), $value);
+		}
+		self::_getEngine()->add($key[0], $value);
+
+		return true;
 	}
 
 	/**
-	 * Return variable value from storage.
+	 * Return variable value from storage/config file.
 	 * If variable not exists return default value
 	 *
 	 * @param string $key Variable key
@@ -71,14 +95,12 @@ class DBConfigure {
 		}
 		
 		$key = explode('.', $key);
-		$config = self::_getEngine()->get($key[0]);
+		$config = self::_getConfigByKey($key[0]);
 		if (!empty($config) && count($key) > 1) {
-			array_shift($key);
-			$config = Hash::get($config, implode('.', $key));
+			$config = Hash::get($config, implode('.', array_slice($key, 1)));
 		}
-		if (empty($config)) {
-			$config = Configure::read($key[0]);
-		}
+	
 		return !empty($config) ? $config : $defaultValue;
 	}
+	
 }

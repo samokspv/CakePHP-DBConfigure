@@ -35,7 +35,6 @@ In any place of your code:
 			)
 		)
 	));
-
 	// read from DB
 	DBConfigure::read('TestSetting'); 
 		/*return: array(
@@ -53,9 +52,17 @@ In any place of your code:
 				'key_1_2_1' => 'value_1_2_1'
 			)
 		)*/
-	DBConfigure::read('TestSetting.key_1_2');
+	DBConfigure::read('TestSetting.key_1.key_1_2');
 		/*return: array(
 			'key_1_2_1' => 'value_1_2_1'
 		)*/
 	DBConfigure::read('TestSetting.key_1_3', 'defaultValue_1_3'); 
 		/*return: defaultValue_1_3*/
+
+	// save to DB
+	DBConfigure::write('TestSetting.key_1.key_1_2', 'value_1_2_1_update');
+	// read from DB
+	DBConfigure::read('TestSetting.key_1.key_1_2');
+		/*return: array(
+			'key_1_2_1' => 'value_1_2_1_update'
+		)*/
