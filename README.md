@@ -8,12 +8,12 @@ Use it if you want to save and read serialized data into DB.
 ## Installation
 
 	cd my_cake_app/app
-	git clone git://github.com/imsamurai/cakephp-DBConfigure.git Plugin/DBConfigure
+	git clone git://github.com/samokspv/cakephp-DBConfigure.git Plugin/DBConfigure
 
 or if you use git add as submodule:
 
 	cd my_cake_app
-	git submodule add "git://github.com/imsamurai/cakephp-DBConfigure.git" "app/Plugin/DBConfigure"
+	git submodule add "git://github.com/samokspv/cakephp-DBConfigure.git" "app/Plugin/DBConfigure"
 
 then add plugin loading in Config/bootstrap.php
 
