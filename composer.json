@@ -1,35 +1,30 @@
 {
-  "name": "samokspv/CakePHP-DBConfigure",
-  "description": "Use it if you want to save and read serialized data into DB",
+  "name": "samokspv/cakephp-db-configure",
+  "description": "Use it if you want to save and read serialized data into DB.",
   "type": "cakephp-plugin",
   "keywords": [
     "cakephp",
     "database",
-    "configure"
+	"configure",
+    "plugin"
   ],
   "homepage": "https://github.com/samokspv/CakePHP-DBConfigure",
   "license": "MIT",
   "authors": [
     {
-      "name": "samokspv",
+      "name": "Pavel Samokish",
       "email": "samokspv@yandex.ru",
       "role": "Maintainer"
-    },
-    {
-      "name": "Shamray Alexander",
-      "email": "im.samuray@gmail.com",
-      "homepage": "https://imsamurai.me",
-      "role": "Founder"
     }
   ],
   "require": {
     "composer/installers": "*",
-    "imsamurai/cakephp-serializable-behaviour": "1.*"
+	"imsamurai/cakephp-serializable-behaviour": "1.0.*"
   },
   "support": {
     "email": "samokspv@yandex.ru",
-    "issues": "https://github.com/samokspv/CakePHP-DBConfigure/issues",
-    "source": "https://github.com/samokspv/CakePHP-DBConfigure"
+    "issues": "https://github.com/imsamurai/CakePHP-DBConfigure/issues",
+    "source": "https://github.com/imsamurai/CakePHP-DBConfigure"
   },
   "extra": {
     "installer-name": "DBConfigure"
