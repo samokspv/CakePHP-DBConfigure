@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * Author: samokspv <samokspv@yandex.ru>
@@ -69,7 +69,10 @@ class DBConfigure {
 
 		$key = explode('.', $key);
 		$config = self::_getConfigByKey($key[0]);
-		if (!empty($config) && count($key) > 1) {
+		if (is_null($config) && count($key) > 1) {
+			$config = array();
+		}
+		if (!is_null($config)) {
 			$value = Hash::insert($config, implode('.', array_slice($key, 1)), $value);
 		}
 		self::_getEngine()->add($key[0], $value);
