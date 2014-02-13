@@ -1,7 +1,7 @@
 CakePHP DBConfigure Plugin
 ==============================
 
-DBConfigure plugin for CakePHP 2.1+
+DBConfigure plugin for CakePHP 2.2+
 
 Use it if you want to save and read serialized data into DB.
 

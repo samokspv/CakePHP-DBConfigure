@@ -9,17 +9,17 @@
 
 class AllDBConfigureTest extends PHPUnit_Framework_TestSuite {
 
-/**
-* Suite define the tests for this suite
-*
-* @return void
-*/
-public static function suite() {
-	$suite = new CakeTestSuite('All DBConfigure Tests');
+	/**
+	 * Suite define the tests for this suite
+	 *
+	 * @return void
+	 */
+	public static function suite() {
+		$suite = new CakeTestSuite('All DBConfigure Tests');
 
-	$path = App::pluginPath('DBConfigure') . 'Test' . DS . 'Case' . DS;
-	$suite->addTestDirectoryRecursive($path);
-	return $suite;
-}
+		$path = App::pluginPath('DBConfigure') . 'Test' . DS . 'Case' . DS;
+		$suite->addTestDirectoryRecursive($path);
+		return $suite;
+	}
 
 }

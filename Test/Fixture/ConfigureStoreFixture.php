@@ -13,10 +13,10 @@
 class ConfigureStoreFixture extends CakeTestFixture {
 
 	/**
-	* {@inheritdoc}
-	*
-	* @var string
-	*/
+	 * {@inheritdoc}
+	 *
+	 * @var string
+	 */
 	public $useDbConfig = 'test';
 
 	/**

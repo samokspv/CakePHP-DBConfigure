@@ -56,16 +56,16 @@ class ConfigureStore extends AppModel {
 	 * If variable not exists return default value
 	 *
 	 * @param string $key Variable name
-	 * @param mixed $default_value Default value if variable not found
+	 * @param mixed $defaultValue Default value if variable not found
 	 * @return mixed Variable value
 	 */
-	public function get($key = null, $default_value = null) {
+	public function get($key = null, $defaultValue = null) {
 		$conditions = compact('key');
 		if ($key === null) {
 			return $this->find('all', $conditions);
 		} else {
 			$value = $this->field('value', $conditions);
-			return $this->find('count', array('conditions' => $conditions)) ? $value : $default_value;
+			return $this->find('count', array('conditions' => $conditions)) ? $value : $defaultValue;
 		}
 	}
 
@@ -79,10 +79,10 @@ class ConfigureStore extends AppModel {
 	 * @return int Increased value
 	 */
 	public function increaseBy($key, $value) {
-		$value_old = $this->get($key, 0);
-		if (is_numeric($value) && is_numeric($value_old)) {
-			$this->add($key, $value + $value_old);
-			return $value + $value_old;
+		$valueOld = $this->get($key, 0);
+		if (is_numeric($value) && is_numeric($valueOld)) {
+			$this->add($key, $value + $valueOld);
+			return $value + $valueOld;
 		}
 	}
 

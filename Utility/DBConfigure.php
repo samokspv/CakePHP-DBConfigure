@@ -39,7 +39,6 @@ class DBConfigure {
 		return self::$_Engine;
 	}
 
-
 	/**
 	 * Get config data from storage/config file
 	 *
