@@ -68,11 +68,14 @@ class DBConfigure {
 
 		$key = explode('.', $key);
 		$config = self::_getConfigByKey($key[0]);
-		if (is_null($config) && count($key) > 1) {
+		$cntKey = count($key);
+		if (is_null($config) &&  $cntKey > 1) {
 			$config = array();
 		}
 		if (!is_null($config)) {
-			$value = Hash::insert($config, implode('.', array_slice($key, 1)), $value);
+			if ($cntKey > 1) {
+				$value = Hash::insert((array)$config, implode('.', array_slice($key, 1)), $value);
+			}
 		}
 		self::_getEngine()->add($key[0], $value);
 
