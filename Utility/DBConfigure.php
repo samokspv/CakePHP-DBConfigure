@@ -69,7 +69,7 @@ class DBConfigure {
 		$key = explode('.', $key);
 		$config = self::_getConfigByKey($key[0]);
 		$cntKey = count($key);
-		if (is_null($config) &&  $cntKey > 1) {
+		if (is_null($config) && $cntKey > 1) {
 			$config = array();
 		}
 		if (!is_null($config)) {
