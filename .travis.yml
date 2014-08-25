@@ -10,10 +10,11 @@ env:
     - PLUGIN_PATH=Plugin/DBConfigure
     - REQUIRE=""
     - DB=mysql
-    - CAKE_VERSION=2.4
+    - CAKE_VERSION=2.5
   matrix:
     - CAKE_VERSION=2.3
     - CAKE_VERSION=2.4
+    - CAKE_VERSION=2.5
     - CAKE_VERSION=master
 
 matrix:
