@@ -46,12 +46,13 @@ class DBConfigure {
 	 * @return mixed
 	 */
 	protected static function _getConfigByKey($key) {
-		$config = self::_getEngine()->get($key);
-		if (empty($config)) {
-			$config = Configure::read($key);
+		$dbConfig = self::_getEngine()->get($key);
+		$fileConfig = Configure::read($key);
+		if (!empty($fileConfig)) {
+			$dbConfig = Hash::mergeDiff($fileConfig, (array)$dbConfig);
 		}
-
-		return $config;
+		
+		return $dbConfig;
 	}
 
 	/**
