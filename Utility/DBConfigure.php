@@ -49,7 +49,7 @@ class DBConfigure {
 		$dbConfig = self::_getEngine()->get($key);
 		$fileConfig = Configure::read($key);
 		if (!empty($fileConfig)) {
-			$dbConfig = Hash::mergeDiff($fileConfig, (array)$dbConfig);
+			$dbConfig = Hash::mergeDiff((array)$dbConfig, $fileConfig);
 		}
 		
 		return $dbConfig;
