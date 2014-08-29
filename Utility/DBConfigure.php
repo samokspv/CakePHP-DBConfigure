@@ -75,7 +75,12 @@ class DBConfigure {
 		}
 		if (!is_null($config)) {
 			if ($cntKey > 1) {
-				$value = Hash::insert((array)$config, implode('.', array_slice($key, 1)), $value);
+				$afterFirstKey = implode('.', array_slice($key, 1));
+				if (is_array($value)) {
+					$valueDefault = Hash::extract($config, $afterFirstKey);
+					$value = Hash::mergeDiff($value, (array)$valueDefault);
+				}
+				$value = Hash::insert((array)$config, $afterFirstKey, $value);
 			}
 		}
 		self::_getEngine()->add($key[0], $value);
