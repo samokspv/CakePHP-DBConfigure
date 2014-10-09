@@ -25,35 +25,6 @@ class DBConfigure {
 	 * @var string
 	 */
 	protected static $_EngineName = 'ConfigureStore';
-	
-	/**
-	 * Return engine instance
-	 *
-	 * @return object
-	 */
-	protected static function _getEngine() {
-		if (!self::$_Engine) {
-			self::$_Engine = ClassRegistry::init('DBConfigure.' . self::$_EngineName);
-		}
-
-		return self::$_Engine;
-	}
-
-	/**
-	 * Get config data from storage/config file
-	 *
-	 * @param string $key Variable key
-	 * @return mixed
-	 */
-	protected static function _getConfigByKey($key) {
-		$dbConfig = self::_getEngine()->get($key);
-		$fileConfig = Configure::read($key);
-		if (!empty($fileConfig)) {
-			$dbConfig = Hash::mergeDiff((array)$dbConfig, $fileConfig);
-		}
-		
-		return $dbConfig;
-	}
 
 	/**
 	 * Adds (or update) variable to storage
@@ -62,10 +33,11 @@ class DBConfigure {
 	 * @param mixed $value Variable value
 	 * @return boolean
 	 */
-	public static function write($key, $value) {
+	public static function write($key, $value, $params = array()) {
 		if (empty($key) || empty($value)) {
 			return false;
 		}
+		$params = self::_buildWriteParams($params);
 
 		$key = explode('.', $key);
 		$config = self::_getConfigByKey($key[0]);
@@ -73,15 +45,13 @@ class DBConfigure {
 		if (is_null($config) && $cntKey > 1) {
 			$config = array();
 		}
-		if (!is_null($config)) {
-			if ($cntKey > 1) {
-				$afterFirstKey = implode('.', array_slice($key, 1));
-				if (is_array($value)) {
-					$valueDefault = Hash::extract($config, $afterFirstKey);
-					$value = Hash::mergeDiff($value, (array)$valueDefault);
-				}
-				$value = Hash::insert((array)$config, $afterFirstKey, $value);
+		if (!is_null($config) && $cntKey > 1) {
+			$afterFirstKey = implode('.', array_slice($key, 1));
+			if (is_array($config) && is_array($value) && $params['equalKeysOnly']) {
+				$valueDefault = Hash::extract($config, $afterFirstKey);
+				$value = Hash::mergeDiff($value, (array)$valueDefault);
 			}
+			$value = Hash::insert((array)$config, $afterFirstKey, $value);
 		}
 		self::_getEngine()->add($key[0], $value);
 
@@ -113,5 +83,47 @@ class DBConfigure {
 	
 		return !empty($config) ? $config : $defaultValue;
 	}
-	
+
+	/**
+	 * Return engine instance
+	 *
+	 * @return object
+	 */
+	protected static function _getEngine() {
+		if (!self::$_Engine) {
+			self::$_Engine = ClassRegistry::init('DBConfigure.' . self::$_EngineName);
+		}
+
+		return self::$_Engine;
+	}
+
+	/**
+	 * Get config data from storage/config file
+	 *
+	 * @param string $key Variable key
+	 * @return mixed
+	 */
+	protected static function _getConfigByKey($key) {
+		$dbConfig = self::_getEngine()->get($key);
+		$fileConfig = Configure::read($key);
+		if (!empty($fileConfig)) {
+			$dbConfig = Hash::mergeDiff((array)$dbConfig, $fileConfig);
+		}
+		
+		return $dbConfig;
+	}
+
+	/**
+	 * Build write params
+	 * @param array $params
+	 * @return array
+	 */
+	protected static function _buildWriteParams($params = array()) {
+		$writeParams['equalKeysOnly'] = (
+			isset($params['equalKeysOnly']) && 
+			empty($params['equalKeysOnly']) ? false : true
+		);
+		
+		return $writeParams;
+	}
 }
