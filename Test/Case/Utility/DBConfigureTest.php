@@ -51,15 +51,17 @@ class DBConfigureTest extends CakeTestCase {
 	 */
 	public static function writeVariations() {
 		return array(
-			array('TestSetting', false, false),
-			array('TestSetting', array(), false),
+			array('', false, false),
+			array('', 234, false),
+			array('TestSetting', false, true),
+			array('TestSetting', array(), true),
 			array('TestSetting', 'value', true),
 			array('TestSetting', 1, true),
 			array('TestSetting.key_1', 'value_1', true),
 			array('TestSetting.key_1.key_1_1', 'value_1_1', true),
 			array('TestSetting.key_1.key_1_1.key_1_1_1', 'value_1_1_1', true),
 			array(
-				'TestSetting', 
+				'TestSetting',
 				array(
 					'key_1' => array(
 						'key_1_1' => 'value_1_1',
@@ -71,7 +73,7 @@ class DBConfigureTest extends CakeTestCase {
 				true
 			),
 			array(
-				'TestSetting.key_1', 
+				'TestSetting.key_1',
 				array(
 					'key_1_1' => 'value_1_1',
 					'key_1_2' => 'value_1_2'
@@ -79,19 +81,19 @@ class DBConfigureTest extends CakeTestCase {
 				true
 			),
 			array(
-				'TestSetting.key_1', 
+				'TestSetting.key_1',
 				array(
 					'key_1_1' => 'value_1_1'
 				),
 				true
 			),
 			array(
-				'TestSetting.key_1.key_1_3', 
+				'TestSetting.key_1.key_1_3',
 				'value_1_3',
 				true
 			),
 			array(
-				'TestSetting.key_1', 
+				'TestSetting.key_1',
 				array(
 					'key_1_1' => 'value_1_1',
 					'key_1_2' => array(

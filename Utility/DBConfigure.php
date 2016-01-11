@@ -34,7 +34,7 @@ class DBConfigure {
 	 * @return boolean
 	 */
 	public static function write($key, $value, $params = array()) {
-		if (empty($key) || empty($value)) {
+		if (empty($key)) {
 			return false;
 		}
 		$params = self::_buildWriteParams($params);
