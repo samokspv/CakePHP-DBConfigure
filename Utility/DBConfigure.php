@@ -69,19 +69,19 @@ class DBConfigure {
 	public static function read($key = null, $defaultValue = null) {
 		if ($key === null) {
 			return Hash::combine(
-				self::_getEngine()->get(), 
-				'{n}.' . self::$_EngineName . '.key', 
+				self::_getEngine()->get(),
+				'{n}.' . self::$_EngineName . '.key',
 				'{n}.' . self::$_EngineName . '.value'
 			);
 		}
-		
+
 		$key = explode('.', $key);
 		$config = self::_getConfigByKey($key[0]);
-		if (!empty($config) && count($key) > 1) {
+		if (!is_null($config) && count($key) > 1) {
 			$config = Hash::get($config, implode('.', array_slice($key, 1)));
 		}
-	
-		return !empty($config) ? $config : $defaultValue;
+
+		return !is_null($config) ? $config : $defaultValue;
 	}
 
 	/**
@@ -106,10 +106,10 @@ class DBConfigure {
 	protected static function _getConfigByKey($key) {
 		$dbConfig = self::_getEngine()->get($key);
 		$fileConfig = Configure::read($key);
-		if (!empty($fileConfig)) {
+		if (!is_null($fileConfig)) {
 			$dbConfig = Hash::mergeDiff((array)$dbConfig, $fileConfig);
 		}
-		
+
 		return $dbConfig;
 	}
 
@@ -120,10 +120,10 @@ class DBConfigure {
 	 */
 	protected static function _buildWriteParams($params = array()) {
 		$writeParams['equalKeysOnly'] = (
-			isset($params['equalKeysOnly']) && 
+			isset($params['equalKeysOnly']) &&
 			empty($params['equalKeysOnly']) ? false : true
 		);
-		
+
 		return $writeParams;
 	}
 }
